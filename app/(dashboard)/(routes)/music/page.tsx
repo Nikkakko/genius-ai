@@ -23,9 +23,11 @@ import { useRouter } from 'next/navigation';
 import Empty from '@/components/shared/Empty';
 
 import Loader from '@/components/shared/Loader';
+import { useProModal } from '@/hooks/use-pro-modal';
 
 const MusicPage = () => {
   const router = useRouter();
+  const { onOpen } = useProModal();
 
   const [music, setMusic] = React.useState<string>();
   const form = useForm<z.infer<typeof MusicSchema>>({
@@ -47,6 +49,9 @@ const MusicPage = () => {
       form.reset();
     } catch (error: any) {
       //TODO: Open Pro-modal with error message
+      if (error.response.status === 403) {
+        onOpen();
+      }
       console.log(error);
     } finally {
       router.refresh();

@@ -24,8 +24,10 @@ import Empty from '@/components/shared/Empty';
 import UserAvatar from '@/components/shared/UserAvatar';
 import BotAvatar from '@/components/shared/BotAvatar';
 import Loader from '@/components/shared/Loader';
+import { useProModal } from '@/hooks/use-pro-modal';
 
 const ConversationPage = () => {
+  const { onOpen } = useProModal();
   const router = useRouter();
 
   const [messages, setMessages] = React.useState<any[]>([]);
@@ -54,6 +56,9 @@ const ConversationPage = () => {
       form.reset();
     } catch (error: any) {
       //TODO: Open Pro-modal with error message
+      if (error.response.status === 403) {
+        onOpen();
+      }
       console.log(error);
     } finally {
       router.refresh();

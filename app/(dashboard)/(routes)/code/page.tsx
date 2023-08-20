@@ -17,9 +17,11 @@ import UserAvatar from '@/components/shared/UserAvatar';
 import BotAvatar from '@/components/shared/BotAvatar';
 import Loader from '@/components/shared/Loader';
 import ReactMarkdown from 'react-markdown';
+import { useProModal } from '@/hooks/use-pro-modal';
 
 const CodePage = () => {
   const router = useRouter();
+  const { onOpen } = useProModal();
 
   const [messages, setMessages] = React.useState<any[]>([]);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -47,6 +49,9 @@ const CodePage = () => {
       form.reset();
     } catch (error: any) {
       //TODO: Open Pro-modal with error message
+      if (error.response.status === 403) {
+        onOpen();
+      }
       console.log(error);
     } finally {
       router.refresh();
