@@ -24,6 +24,7 @@ import Empty from '@/components/shared/Empty';
 
 import Loader from '@/components/shared/Loader';
 import { useProModal } from '@/hooks/use-pro-modal';
+import { toast } from 'react-hot-toast';
 
 const MusicPage = () => {
   const router = useRouter();
@@ -51,6 +52,8 @@ const MusicPage = () => {
       //TODO: Open Pro-modal with error message
       if (error.response.status === 403) {
         onOpen();
+      } else {
+        toast.error('Something went wrong!');
       }
       console.log(error);
     } finally {

@@ -33,6 +33,7 @@ import {
 import { Card, CardFooter } from '@/components/ui/card';
 import Image from 'next/image';
 import { useProModal } from '@/hooks/use-pro-modal';
+import { toast } from 'react-hot-toast';
 
 const ImagePage = () => {
   const router = useRouter();
@@ -64,6 +65,8 @@ const ImagePage = () => {
       //TODO: Open Pro-modal with error message
       if (error.response.status === 403) {
         onOpen();
+      } else {
+        toast.error('Something went wrong!');
       }
       console.log(error);
     } finally {

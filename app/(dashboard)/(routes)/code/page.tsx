@@ -18,6 +18,7 @@ import BotAvatar from '@/components/shared/BotAvatar';
 import Loader from '@/components/shared/Loader';
 import ReactMarkdown from 'react-markdown';
 import { useProModal } from '@/hooks/use-pro-modal';
+import { toast } from 'react-hot-toast';
 
 const CodePage = () => {
   const router = useRouter();
@@ -51,6 +52,8 @@ const CodePage = () => {
       //TODO: Open Pro-modal with error message
       if (error.response.status === 403) {
         onOpen();
+      } else {
+        toast.error('Something went wrong!');
       }
       console.log(error);
     } finally {

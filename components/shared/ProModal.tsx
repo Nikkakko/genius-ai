@@ -15,12 +15,25 @@ import { Card } from '../ui/card';
 import { cn } from '@/lib/utils';
 import { Check, Zap } from 'lucide-react';
 import { Button } from '../ui/button';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 const ProModal = () => {
-  const { isOpen, onClose, onOpen } = useProModal();
+  const { isOpen, onClose } = useProModal();
   const [loading, setLoading] = React.useState(false);
 
-  const onSubscribe = async () => {};
+  const onSubscribe = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get('api/stripe');
+
+      window.location.href = res.data.url;
+    } catch (error) {
+      toast.error('Something went wrong!');
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
